@@ -1,0 +1,7 @@
+{
+  "name": "EcoKids",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

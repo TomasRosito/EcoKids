@@ -1,0 +1,52 @@
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-back-button slot="start" defaultHref="tabs/tab3"></ion-back-button>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Carrito</ion-card-title>
+    </ion-card-header>
+  <ion-card-content>
+    <ion-list >
+      <ion-item *ngFor="let item of cartService.carrito">
+        <ion-thumbnail slot="start">
+          <ion-img [src]="item.producto.imagen"></ion-img>
+        </ion-thumbnail>
+        <ion-label>
+          <h2>{{ item.producto.nombre }}</h2>
+          <p >Precio: {{ item.producto.precio }}</p>
+        </ion-label>
+        <ion-button (click)="disminuirCantidad(item)">-</ion-button>
+        <p>{{ item.cantidad }}</p>
+        <ion-button (click)="aumentarCantidad(item)">+</ion-button>
+        <ion-button (click)="eliminarProducto(item.producto.nombre)"><ion-icon slot="icon-only" name="trash"></ion-icon></ion-button>
+      </ion-item>
+    </ion-list>
+  </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-content>
+      <ng-container *ngIf="cartService.carrito.length > 0">
+        <p class="custom-text" [ngClass]="puedeComprarTotalCarrito() ? 'verde' : 'rojo'">
+          Total: {{ cartService.totalCarrito }}
+        </p>
+        <div *ngIf="puedeComprarTotalCarrito()">
+          <h3 class="custom-text">¡Puedes comprar estos productos!</h3>
+        </div>
+        <div *ngIf="!puedeComprarTotalCarrito()">
+          <h3 class="custom-text">Saldo insuficiente</h3>
+        </div>
+      </ng-container>
+    </ion-card-content>
+
+    <div class="button-container">
+      <ion-button (click)="realizarPedido()" [disabled]="!puedeComprarTotalCarrito()">Realizar Pedido</ion-button>
+      <ion-button (click)="vaciarCarrito()">Vaciar Carrito</ion-button>
+    </div>
+  </ion-card>
+
+</ion-content>
